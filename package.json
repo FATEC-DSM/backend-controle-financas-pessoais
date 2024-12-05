@@ -2,11 +2,9 @@
   "name": "backend-controle-financas-pessoais",
   "version": "1.0.0",
   "description": "Service of us personal control app",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",

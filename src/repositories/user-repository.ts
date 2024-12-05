@@ -14,12 +14,12 @@ type ResultSetHeader = {
 }
 
 class UsersRepository implements Repository<User> {
-  private table = 'users'
+  private table = 'Users'
 
   async create(entity: User) {
     try {
       const [results, fields] = await DB.pool.execute(
-        `INSERT INTO ${this.table} (email, password, name, last_name) VALUES (?, ?, ?, ?)`,
+        `INSERT INTO ${this.table} (Email, Password, Name, Last_name) VALUES (?, ?, ?, ?)`,
         [entity.email, entity.password, entity.name, entity.lastName]
       )
 
@@ -34,13 +34,13 @@ class UsersRepository implements Repository<User> {
   async read(entity: CredentialsInterface) {
     try {
       const [results, fields] = await DB.pool.execute(
-        `SELECT * FROM ${this.table} WHERE email = ? AND password = ?`,
+        `SELECT Id_user, Email, Name, Last_name FROM ${this.table} WHERE email = ? AND password = ?`,
         [entity.email, entity.password]
       )
 
       return results as User[]
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
 }

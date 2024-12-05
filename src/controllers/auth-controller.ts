@@ -40,7 +40,7 @@ export class AuthController {
       return response
     }
 
-    const user = { ...results[0], password: '' }
+    const user = { ...results[0] }
 
     response.ok = true
     response.status = 200

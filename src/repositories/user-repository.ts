@@ -1,6 +1,6 @@
 import { DB } from '../connection'
 import { CredentialsInterface } from '../interfaces/CredentialInterface'
-import { User } from '../interfaces/repositories/User'
+import { User } from '../interfaces/User'
 import { Repository } from './../interfaces/Repository.d'
 
 type ResultSetHeader = {

@@ -2,6 +2,7 @@ import express, { Request, Response, Application } from 'express'
 import login from './routes/login'
 import createUser from './routes/create-user'
 import transactions from './routes/transactions'
+import categories from './routes/categories'
 import cors from 'cors'
 import { sessionInit } from './session'
 import 'dotenv/config'
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 app.use('/login', login)
 app.use('/create-user', createUser)
 app.use('/transactions', transactions)
+app.use('/categories', categories)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Bem vindo ao seu controle de finanças')

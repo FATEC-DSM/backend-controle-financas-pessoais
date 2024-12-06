@@ -4,7 +4,8 @@
   "description": "Service of us personal control app",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "vercel dev"
   },
   "keywords": [],
   "author": "",

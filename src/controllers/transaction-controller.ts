@@ -83,6 +83,10 @@ export class TransactionController implements TransactionInterface {
       return response
     }
 
+    response.ok = true
+    response.status = 201
+    response.body = created
+
     return response
   }
 

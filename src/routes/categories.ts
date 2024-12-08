@@ -10,7 +10,7 @@ const categoryController = new CategoryController()
 router.post('/', async (req: Request, res: Response) => {
   const category: CategoryInterface = req.body
 
-  categoryController.userId = category.userId
+  categoryController.userId = category.userId as string
   categoryController.name = category.name
   categoryController.description = category.description
 

@@ -41,13 +41,13 @@ export class CategoryController {
       body: {},
     }
 
-    if (this._emptyFieldsValidate()) {
+    if (!this._emptyFieldsValidate()) {
       response.message = 'Preencha todos os campos.'
       return response
     }
 
     const criado = await categoriesRepository.create({
-      userId: this.userId,
+      userId: String(this.userId),
       name: this.name,
       description: this.description,
     })

@@ -1,3 +1,4 @@
+import { query } from 'express'
 import { ControllersResponse } from '../interfaces/ControllersResponse'
 import { transactionRepository } from '../repositories/transaction-repository'
 import { TransactionInterface } from './../interfaces/TransactionInterface.d'
@@ -13,14 +14,14 @@ export class TransactionController implements TransactionInterface {
   description: string = ''
 
   set minDate(value: string) {
-    if (!isNaN(new Date(value).getTime())) {
+    if (isNaN(new Date(value).getTime())) {
       throw new Error('data mínima inválida')
     }
 
     this._minDate = new Date(value)
   }
   set maxDate(value: string) {
-    if (!isNaN(new Date(value).getTime())) {
+    if (isNaN(new Date(value).getTime())) {
       throw new Error('data máxima inválida')
     }
 

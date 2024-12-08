@@ -23,12 +23,12 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/:userId', async (req: Request, res: Response) => {
   transactionController.minDate = String(req.query.minDate)
-  transactionController.maxDate = String(req.query.minDate)
+  transactionController.maxDate = String(req.query.maxDate)
 
   const { ok, status, message, body } = await transactionController.handleGet({
     userId: req.params.userId,
-    categoryId: String(req.query.categoryId),
-    type: String(req.query.type),
+    categoryId: req.query.categoryId as string,
+    type: req.query.type as string,
   })
 
   res.status(status).send({ ok, message, body })

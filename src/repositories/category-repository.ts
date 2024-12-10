@@ -23,7 +23,6 @@ class CategoriesRepository implements Repository<CategoryInterface> {
       )
 
       const res = results as ResultSetHeader
-      DB.pool.destroy()
 
       return res.affectedRows == 1
     } catch (error: any) {

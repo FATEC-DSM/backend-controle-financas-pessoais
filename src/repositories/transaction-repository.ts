@@ -24,11 +24,11 @@ class TransactionRepository implements Repository<TransactionInterface> {
     try {
       const [results, fields] = await DB.pool.execute(
         `INSERT INTO ${this.table} (
-          Id_user
-          Id_category
-          Type
-          Amount
-          Transaction_date
+          Id_user,
+          Id_category,
+          Type,
+          Amount,
+          Transaction_date,
           Description
           ) VALUES (?, ?, ?, ?, ?, ?)`,
         [
@@ -82,9 +82,20 @@ class TransactionRepository implements Repository<TransactionInterface> {
   async _readByUser(userId: string) {
     return await DB.pool.execute(
       `
-      SELECT
-        Id_category, Type, Amount, Transaction_date, Description
-      FROM ${this.table} WHERE Id_user = ?
+      SELECT 
+        T.Type,
+        T.Amount,
+        T.Transaction_date,
+        T.Description,
+        C.Name as Name_category
+      FROM 
+        ${this.table} as T
+      JOIN 
+        Category as C
+      ON 
+        T.ID_category = C.ID_category
+      WHERE 
+        T.Id_user = ?
     `,
       [userId]
     )
@@ -94,8 +105,11 @@ class TransactionRepository implements Repository<TransactionInterface> {
     return await DB.pool.execute(
       `
       SELECT
-        Id_category, Type, Amount, Transaction_date, Description
-      FROM ${this.table} WHERE Id_user = ? AND Type = ?
+        Id_category, Type as tipo, Amount as valor, Transaction_date as data, Description as descricao, C.Name as nome_categoria
+      FROM ${this.table} as T
+      JOIN Category as C
+      ON T.ID_category = C.ID_category
+      WHERE Id_user = ? AND Type = ?
     `,
       [userId, type]
     )
@@ -104,6 +118,7 @@ class TransactionRepository implements Repository<TransactionInterface> {
   async _readByCategory(userId: string, category: string) {
     return await DB.pool.execute(
       `
+      
       SELECT
         Id_category, Type, Amount, Transaction_date, Description
       FROM ${this.table} WHERE Id_user = ? AND Id_category = ?
@@ -115,9 +130,20 @@ class TransactionRepository implements Repository<TransactionInterface> {
   async _readByDateRange(userId: string, minDate: Date, maxDate: Date) {
     return await DB.pool.execute(
       `
-      SELECT
-        Id_category, Type, Amount, Transaction_date, Description
-      FROM ${this.table} WHERE Id_user = ? AND (Transaction_date >= ? AND Transaction_date <= ?)
+      SELECT 
+        T.Type,
+        T.Amount,
+        T.Transaction_date,
+        T.Description,
+        C.Name as Name_category
+      FROM 
+        ${this.table} as T
+      JOIN 
+        Category as C
+      ON 
+        T.ID_category = C.ID_category
+      WHERE 
+        T.Id_user = ? AND (Transaction_date >= ? AND Transaction_date <= ?)
     `,
       [userId, minDate, maxDate]
     )

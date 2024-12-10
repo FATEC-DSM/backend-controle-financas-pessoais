@@ -13,7 +13,7 @@ router.post('/', async (req: Request, res: Response) => {
   transactionController.userId = transaction.userId
   transactionController.categoryId = transaction.categoryId
   transactionController.type = transaction.type
-  transactionController.amount = transaction.amount
+  transactionController.amount = Number(transaction.amount)
   transactionController.date = transaction.date
   transactionController.description = transaction.description
 

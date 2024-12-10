@@ -41,7 +41,7 @@ export class CategoryController {
       body: {},
     }
 
-    if (!this._emptyFieldsValidate()) {
+    if (this._emptyFieldsValidate()) {
       response.message = 'Preencha todos os campos.'
       return response
     }

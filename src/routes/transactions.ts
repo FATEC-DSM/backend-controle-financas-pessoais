@@ -21,6 +21,13 @@ router.post('/', async (req: Request, res: Response) => {
   res.status(status).send({ ok, message, body })
 })
 
+router.delete('/:id', async (req: Request, res: Response) => {
+  const { ok, status, message, body } =
+    await transactionController.handleDelete(req.params.id)
+
+  res.status(status).send({ ok, message, body })
+})
+
 router.get('/:userId', async (req: Request, res: Response) => {
   transactionController.minDate = String(req.query.minDate)
   transactionController.maxDate = String(req.query.maxDate)

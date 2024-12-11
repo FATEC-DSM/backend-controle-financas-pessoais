@@ -91,6 +91,27 @@ export class TransactionController implements TransactionInterface {
     return response
   }
 
+  async handleDelete(id: string): Promise<ControllersResponse> {
+    const response = {
+      ok: false,
+      status: 400,
+      message: '',
+      body: {},
+    }
+
+    const deleted = await transactionRepository.delete(id)
+
+    if (!deleted) {
+      response.message = 'Falha ao criar a transação'
+      return response
+    }
+
+    response.ok = true
+    response.status = 200
+
+    return response
+  }
+
   _emptyFieldsValidate() {
     return (
       !this.userId ||

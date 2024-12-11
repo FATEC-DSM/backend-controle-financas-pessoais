@@ -3,5 +3,5 @@ export interface Repository<T> {
   readById?: (id: string) => Promise<T[] | undefined>
   create?: (entity: T) => Promise<Boolean | undefined>
   update?: (id: string, entity: T) => Promise<T[] | undefined>
-  delete?: (id: string) => { id: string }
+  delete?: (id: string) => void
 }

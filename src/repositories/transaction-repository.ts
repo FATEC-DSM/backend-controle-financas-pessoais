@@ -20,6 +20,20 @@ type TransactionRangeDate = {
 class TransactionRepository implements Repository<TransactionInterface> {
   private table = 'Transactions'
 
+  async delete(id: string) {
+    try {
+      const [results, fields] = await DB.pool.execute(
+        `DELETE FROM ${this.table} WHERE ID_transaction = ?`,
+        [id]
+      )
+
+      const res = results as ResultSetHeader
+      return res.affectedRows == 1
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
   async create(entity: TransactionInterface) {
     try {
       const [results, fields] = await DB.pool.execute(
@@ -84,6 +98,7 @@ class TransactionRepository implements Repository<TransactionInterface> {
       `
       SELECT 
         T.Type,
+        T.ID_transaction,
         T.Amount,
         T.Transaction_date,
         T.Description,
@@ -104,12 +119,21 @@ class TransactionRepository implements Repository<TransactionInterface> {
   async _readByType(userId: string, type: string) {
     return await DB.pool.execute(
       `
-      SELECT
-        Id_category, Type as tipo, Amount as valor, Transaction_date as data, Description as descricao, C.Name as nome_categoria
-      FROM ${this.table} as T
-      JOIN Category as C
-      ON T.ID_category = C.ID_category
-      WHERE Id_user = ? AND Type = ?
+      SELECT 
+        T.Type,
+        T.ID_transaction,
+        T.Amount,
+        T.Transaction_date,
+        T.Description,
+        C.Name as Name_category
+      FROM 
+        ${this.table} as T
+      JOIN 
+        Category as C
+      ON 
+        T.ID_category = C.ID_category
+      WHERE 
+        T.Id_user = ? AND Type = ?
     `,
       [userId, type]
     )
@@ -118,10 +142,21 @@ class TransactionRepository implements Repository<TransactionInterface> {
   async _readByCategory(userId: string, category: string) {
     return await DB.pool.execute(
       `
-      
-      SELECT
-        Id_category, Type, Amount, Transaction_date, Description
-      FROM ${this.table} WHERE Id_user = ? AND Id_category = ?
+      SELECT 
+        T.Type,
+        T.ID_transaction,
+        T.Amount,
+        T.Transaction_date,
+        T.Description,
+        C.Name as Name_category
+      FROM 
+        ${this.table} as T
+      JOIN 
+        Category as C
+      ON 
+        T.ID_category = C.ID_category
+      WHERE 
+        T.Id_user = ? AND Id_category = ?
     `,
       [userId, category]
     )
@@ -132,6 +167,7 @@ class TransactionRepository implements Repository<TransactionInterface> {
       `
       SELECT 
         T.Type,
+        T.ID_transaction,
         T.Amount,
         T.Transaction_date,
         T.Description,

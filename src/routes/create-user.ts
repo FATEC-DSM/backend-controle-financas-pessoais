@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from 'express'
 import { UserController } from '../controllers/user-controller'
-import { User } from '../interfaces/repositories/User'
+import { User } from '../interfaces/User'
 
 const router = Router()
 router.use(express.json())
